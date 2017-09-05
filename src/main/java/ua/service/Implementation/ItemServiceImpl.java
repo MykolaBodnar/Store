@@ -2,17 +2,21 @@ package ua.service.Implementation;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
-import ua.dao.ItemDao;
-import ua.dao.ItemImageDao;
-import ua.dto.ItemForm;
+import ua.dao.*;
+import ua.dto.*;
 import ua.dto.filter.ItemFilter;
-import ua.entity.Item;
+import ua.dto.filter.ItemFilterParam;
+import ua.dto.filter.NameFilter;
+import ua.dto.ProducerDto;
+import ua.entity.*;
 import ua.service.FileUtils;
 import ua.service.ItemService;
+import ua.service.specification.ItemSearchSpecification;
 import ua.service.specification.ItemSpecification;
 
 import java.io.File;
@@ -25,40 +29,36 @@ import java.util.stream.Collectors;
 public class ItemServiceImpl implements ItemService {
 
     @Autowired
-    ItemDao itemDao;
+    private ItemDao itemDao;
 
     @Autowired
-    ItemImageDao itemImageDao;
+    private ItemImageDao itemImageDao;
 
     @Autowired
-    FileUtils fileUtils;
+    private FileUtils fileUtils;
+
+    @Autowired
+    private AttributeValueDao attributeValueDao;
+
+    @Autowired
+    private CategoryDao categoryDao;
+
+    @Autowired
+    private AttributeDao attributeDao;
+
+    @Autowired
+    private ProducerDao producerDao;
 
     @Override
     public void save(ItemForm itemForm) {
-        Item item = new Item();
-        item.setId(itemForm.getId());
-        item.setCategory(itemForm.getCategory());
-        item.setId(itemForm.getId());
-        item.setPrice(itemForm.getPrice());
-        item.setName(itemForm.getName());
-        item.setProducer(itemForm.getProducer());
-        item.setAttributeValues(itemForm.getAttributeValues());
-        item.setDescription(generateDescription(itemForm));
+        Item item = DtoMapper.itemFormToItem(itemForm);
         if (item.getId() == 0) {
             itemDao.saveAndFlush(item);
+            itemForm.setId(item.getId());
         }
         saveImage(item, itemForm.getFile());
         itemDao.save(item);
 
-    }
-
-    private String generateDescription(ItemForm itemForm) {
-        String description = itemForm.getAttributeValues().stream()
-                .filter(sav -> sav.getAttribute().isForSelect())
-                .map(sav -> "<b>" + sav.getAttribute().getName() + ": </b>" + sav.getValue())
-                .collect(Collectors.joining(", "));
-
-        return description;
     }
 
     private void saveImage(Item item, MultipartFile file) {
@@ -91,16 +91,49 @@ public class ItemServiceImpl implements ItemService {
     }
 
     @Override
-    public ItemForm findOneWithAll(int id) {
+    public ItemDto findOneDto(int id) {
+        Item item = itemDao.findOneWithCategory(id);
+        String producer = itemDao.findOneWithProducer(id).getProducer().getName();
+        List<AttributeValue> attributeValues = attributeValueDao.findAllByItem(id);
+        List<ItemImage> itemImages = itemImageDao.findAllByItem(id);
+        ItemDto itemDto = DtoMapper.getItemDto(item, producer, attributeValues, itemImages);
+        return itemDto;
+    }
+
+    @Override
+    public ItemFilterParam getFilterParam(int categoryId) {
+        Category category = categoryDao.findOne(categoryId);
+        List<Attribute> attributes = attributeDao.findAllWithValuesByCategoryId(categoryId);
+        List<Producer> producers = producerDao.findAllByCategoryId(categoryId);
+        ItemFilterParam itemFilterParam = DtoMapper.getItemFilterParam(category, attributes, producers);
+        return itemFilterParam;
+    }
+
+    @Override
+    public Page<ItemListDto> findAll(String name, Pageable pageable) {
+        Page<Item> itemPage = itemDao.findAll(new ItemSearchSpecification(new NameFilter(name)), pageable);
+        Page<ItemListDto> dtoPage = new PageImpl<>(DtoMapper.itemPageToListDto(itemPage)
+                , pageable, itemPage.getTotalElements()
+        );
+        return dtoPage;
+    }
+
+    @Override
+    public Page<ItemListDto> findAll(ItemFilter filter, Pageable pageable, int categoryId) {
+        filter.setCategoryId(categoryId);
+        Page<Item> itemPage = itemDao.findAll(new ItemSpecification(filter), pageable);
+        Page<ItemListDto> dtoPage = new PageImpl<>(DtoMapper.itemPageToListDto(itemPage)
+                , pageable, itemPage.getTotalElements()
+        );
+        return dtoPage;
+    }
+
+    @Override
+    public ItemForm findOneForm(int id) {
         Item item = itemDao.findOneWithValues(id);
-        ItemForm itemForm = new ItemForm();
-        itemForm.setAttributeValues(item.getAttributeValues());
-        itemForm.setCategory(itemDao.findOneWithCategory(id).getCategory());
-        itemForm.setProducer(itemDao.findOneWithProducer(id).getProducer());
-        itemForm.setId(item.getId());
-        itemForm.setName(item.getName());
-        itemForm.setPrice(item.getPrice());
-        itemForm.setImageUrl(item.getImageUrl());
+        Category category = itemDao.findOneWithCategory(id).getCategory();
+        Producer producer = itemDao.findOneWithProducer(id).getProducer();
+        ItemForm itemForm = DtoMapper.getItemForm(item, category, producer);
         return itemForm;
     }
 
@@ -125,9 +158,5 @@ public class ItemServiceImpl implements ItemService {
         }
     }
 
-    @Override
-    public Page<Item> findAll(ItemFilter filter, Pageable pageable, int categoryId) {
-        filter.setCategoryId(categoryId);
-        return itemDao.findAll(new ItemSpecification(filter),pageable);
-    }
+
 }

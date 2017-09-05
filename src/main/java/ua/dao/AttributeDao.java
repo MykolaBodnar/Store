@@ -10,10 +10,7 @@ import ua.entity.Attribute;
 import java.util.List;
 
 @Repository
-public interface AttributeDao extends JpaRepository<Attribute,Integer>, JpaSpecificationExecutor<Attribute> {
-
-    @Query("select a from Attribute a left join fetch a.attributeValues where a.id =:id")
-    Attribute findOneWithValues(@Param("id") int id);
+public interface AttributeDao extends JpaRepository<Attribute, Integer>, JpaSpecificationExecutor<Attribute> {
 
     @Query("select distinct a from Category c join c.attributes a left join fetch a.attributeValues " +
             "where c.id =:categoryId")

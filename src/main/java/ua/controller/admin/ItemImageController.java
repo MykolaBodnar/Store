@@ -14,24 +14,27 @@ import ua.service.ItemService;
 @Controller
 @RequestMapping("/admin/item/{itemId}/images")
 public class ItemImageController {
+
     @Autowired
-    ItemImageService itemImageService;
+    private ItemImageService itemImageService;
     @Autowired
-    ItemService itemService;
+    private ItemService itemService;
 
     @PostMapping
-    public String save(@RequestParam MultipartFile[] images, @PathVariable int itemId){
-        itemImageService.save(images,itemId);
-        return "redirect:/admin/item/"+itemId+"/images/";
+    public String save(@RequestParam MultipartFile[] images, @PathVariable int itemId) {
+        itemImageService.save(images, itemId);
+        return "redirect:/admin/item/" + itemId + "/images/";
     }
+
     @RequestMapping
-    public String list(@PathVariable int itemId, Model model){
-        model.addAttribute("images",itemImageService.findAllByItemId(itemId));
+    public String list(@PathVariable int itemId, Model model) {
+        model.addAttribute("images", itemImageService.findAllByItemId(itemId));
         return "admin-itemImageList";
     }
+
     @RequestMapping("/delete/{id}")
-    public String delete(@PathVariable int id,@PathVariable int itemId){
+    public String delete(@PathVariable int id, @PathVariable int itemId) {
         itemImageService.delete(id);
-        return "redirect:/admin/item/" + itemId + "/images/";
+        return "redirect:/admin/item/" + itemId;
     }
 }

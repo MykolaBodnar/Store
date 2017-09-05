@@ -16,18 +16,18 @@ import ua.validator.UserValidator;
 import javax.validation.Valid;
 
 @Controller
-public class UserController {
+public class RegistrationController {
 
     @Autowired
-    UserService userService;
+    private UserService userService;
 
     @ModelAttribute("form")
-    User getForm() {
+    public User getForm() {
         return new User();
     }
 
     @ModelAttribute("resetForm")
-    ResetPasswordForm getPasswordForm() {
+    public ResetPasswordForm getPasswordForm() {
         return new ResetPasswordForm();
     }
 
@@ -42,12 +42,13 @@ public class UserController {
     }
 
     @RequestMapping(value = "/registration", method = RequestMethod.POST)
-    public String save(@Valid @ModelAttribute("form") User user, BindingResult bindingResult) {
+    public String save(@Valid @ModelAttribute("form") User user, BindingResult bindingResult,Model model) {
         if (bindingResult.hasErrors()) {
             return "user-registration";
         }
         userService.save(user);
-        return "redirect:/";
+        model.addAttribute("message","You registered, for login confirm your email");
+        return "user-message";
     }
 
     @RequestMapping(value = "/registration")
@@ -56,9 +57,10 @@ public class UserController {
     }
 
     @RequestMapping(value = "/confirm/{uuid}")
-    public String confirm(@PathVariable String uuid) {
+    public String confirm(@PathVariable String uuid,Model model) {
+        model.addAttribute("message","Your email confirmed");
         userService.confirm(uuid);
-        return "redirect:/";
+        return "user-message";
     }
 
     @RequestMapping(value = "/forgot-password")
@@ -67,9 +69,10 @@ public class UserController {
     }
 
     @RequestMapping(value = "/forgot-password", method = RequestMethod.POST)
-    public String forgotPassword(@RequestParam String emailForResetPassword) {
+    public String forgotPassword(@RequestParam String emailForResetPassword,Model model) {
         userService.forgotPassword(emailForResetPassword);
-        return "redirect:/";
+        model.addAttribute("message","New password configuration send on your email");
+        return "user-message";
     }
 
     @RequestMapping(value = "/reset-password/{uuid}")

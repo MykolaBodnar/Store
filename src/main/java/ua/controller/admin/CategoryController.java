@@ -26,16 +26,16 @@ import javax.validation.Valid;
 public class CategoryController {
 
     @Autowired
-    CategoryService categoryService;
+    private CategoryService categoryService;
 
     @Autowired
-    AttributeService attributeService;
+    private AttributeService attributeService;
 
     @Autowired
-    ProducerService producerService;
+    private ProducerService producerService;
 
     @Autowired
-    ItemService itemService;
+    private ItemService itemService;
 
     @ModelAttribute("form")
     public Category getForm() {
@@ -54,8 +54,8 @@ public class CategoryController {
 
 
     @InitBinder("form")
-    public void initBinder(WebDataBinder webDataBinder){
-        webDataBinder.setValidator( new CategoryValidator(categoryService));
+    public void initBinder(WebDataBinder webDataBinder) {
+        webDataBinder.setValidator(new CategoryValidator(categoryService));
     }
 
     @RequestMapping
@@ -66,7 +66,7 @@ public class CategoryController {
 
     @PostMapping
     public String save(@ModelAttribute("form") @Valid Category category, BindingResult bindingResult) {
-        if(bindingResult.hasErrors()){
+        if (bindingResult.hasErrors()) {
             return "admin-categoryForm";
         }
         categoryService.save(category);
@@ -92,7 +92,7 @@ public class CategoryController {
 
     @RequestMapping(value = "/{id}/attributes")
     public String attributes(Model model, @PathVariable int id, @ModelAttribute("filter") NameFilter filter,
-                                   @PageableDefault Pageable pageable) {
+                             @PageableDefault Pageable pageable) {
         Category category = categoryService.findOneWithAttribute(id);
         model.addAttribute("category", category);
         model.addAttribute("page", attributeService

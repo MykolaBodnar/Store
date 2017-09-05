@@ -9,8 +9,11 @@ import java.util.List;
 
 public interface AttributeValueService {
     void save(AttributeValue attributeValue);
+
     void delete(int id);
+
     AttributeValue findOne(int id);
+
     List<AttributeValue> findAll();
 
     Page<AttributeValue> findAll(int stringAttributeId, AttributeValueFilter filter, Pageable pageable);
@@ -18,4 +21,6 @@ public interface AttributeValueService {
     AttributeValue findOneWithAttribute(int id);
 
     boolean valueExist(AttributeValue value);
+
+    List<AttributeValue> findAllByItem(int itemId);
 }

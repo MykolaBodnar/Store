@@ -34,11 +34,11 @@ public class ResetPasswordValidator implements Validator {
         Pattern pattern = Pattern.compile(UserValidator.EMAIL_PATTERN);
         if (!pattern.matcher(resetPasswordForm.getEmail()).matches()) {
             errors.rejectValue("email", "", "Incorrect email");
-        } else{
+        } else {
             User user = userService.findOne(resetPasswordForm.getEmail());
-            if(user==null){
+            if (user == null) {
                 errors.rejectValue("email", "", "Email not found");
-            } else if(!user.getUUID().equals(resetPasswordForm.getUuid())){
+            } else if (!user.getUUID().equals(resetPasswordForm.getUuid())) {
                 errors.rejectValue("email", "", "Input email not equals your email");
             }
         }

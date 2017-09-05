@@ -20,7 +20,7 @@ import javax.validation.Valid;
 public class ProducerController {
 
     @Autowired
-    ProducerService producerService;
+    private ProducerService producerService;
 
     @ModelAttribute("form")
     public Producer getForm() {
@@ -50,7 +50,7 @@ public class ProducerController {
 
     @RequestMapping(method = RequestMethod.POST)
     public String save(@Valid @ModelAttribute("form") Producer producer, BindingResult bindingResult) {
-        if(bindingResult.hasErrors()){
+        if (bindingResult.hasErrors()) {
             return "admin-producerForm";
         }
         producerService.save(producer);

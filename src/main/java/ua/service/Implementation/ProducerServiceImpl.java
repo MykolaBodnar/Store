@@ -19,10 +19,10 @@ import java.util.List;
 public class ProducerServiceImpl implements ProducerService {
 
     @Autowired
-    ProducerDao producerDao;
+    private ProducerDao producerDao;
 
     @Autowired
-    ItemDao itemDao;
+    private ItemDao itemDao;
 
     @Override
     public void save(Producer producer) {
@@ -51,7 +51,7 @@ public class ProducerServiceImpl implements ProducerService {
 
     @Override
     public Page<Producer> findAll(NameFilter filter, Pageable pageable) {
-        return producerDao.findAll(new ProducerSpecification(filter),pageable);
+        return producerDao.findAll(new ProducerSpecification(filter), pageable);
     }
 
     @Override

@@ -19,16 +19,16 @@ import java.util.UUID;
 
 @Service("userDetailsService")
 @Transactional
-public class UserServiceImpl implements UserService ,UserDetailsService{
+public class UserServiceImpl implements UserService, UserDetailsService {
 
     @Autowired
-    UserDao userDao;
+    private UserDao userDao;
 
     @Autowired
-    BCryptPasswordEncoder bCryptPasswordEncoder;
+    private BCryptPasswordEncoder bCryptPasswordEncoder;
 
     @Autowired
-    MailSender mailSender;
+    private MailSender mailSender;
 
     @Override
     public List<User> findAll() {
@@ -48,11 +48,11 @@ public class UserServiceImpl implements UserService ,UserDetailsService{
     @Override
     public void save(User user) {
         user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
-        user.setRole(Role.USER);
+        user.setRole(Role.ROLE_USER);
         String uuid = UUID.randomUUID().toString();
         user.setUUID(uuid);
         userDao.save(user);
-        mailSender.sendMail("MyStore registration",user.getEmail(),"http://localhost:8080/confirm/" + uuid);
+        mailSender.sendMail("MyStore registration", user.getEmail(), "http://localhost:8080/confirm/" + uuid);
     }
 
     @Override
@@ -65,8 +65,8 @@ public class UserServiceImpl implements UserService ,UserDetailsService{
     @Override
     public void forgotPassword(String email) {
         User user = userDao.findByEmail(email);
-        if(user!=null){
-            mailSender.sendMail("MyStore reset password",email,"http://localhost:8080/reset-password/" + user.getUUID());
+        if (user != null) {
+            mailSender.sendMail("MyStore reset password", email, "http://localhost:8080/reset-password/" + user.getUUID());
         }
     }
 

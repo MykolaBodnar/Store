@@ -8,7 +8,7 @@ import org.springframework.stereotype.Repository;
 import ua.entity.Item;
 
 @Repository
-public interface ItemDao extends JpaRepository<Item,Integer>, JpaSpecificationExecutor<Item> {
+public interface ItemDao extends JpaRepository<Item, Integer>, JpaSpecificationExecutor<Item> {
 
     @Query("select i from Item i left join fetch i.attributeValues where i.id =:id")
     Item findOneWithValues(@Param("id") int id);

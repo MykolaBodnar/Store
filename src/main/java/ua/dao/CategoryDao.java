@@ -8,7 +8,7 @@ import org.springframework.stereotype.Repository;
 import ua.entity.Category;
 
 @Repository
-public interface CategoryDao extends JpaRepository<Category,Integer>, JpaSpecificationExecutor<Category> {
+public interface CategoryDao extends JpaRepository<Category, Integer>, JpaSpecificationExecutor<Category> {
 
     @Query("select c from Category c left join fetch c.attributes where c.id =:id")
     Category findOneWithAttribute(@Param("id") int id);

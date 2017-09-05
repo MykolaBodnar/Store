@@ -8,10 +8,15 @@
 
     <security:http>
         <security:form-login login-page="/login-page" login-processing-url="/login-processing"
-                             authentication-success-forward-url="/" authentication-failure-forward-url="/login-page?error"/>
+                             authentication-success-forward-url="/"
+                             authentication-failure-url="/login-page?error"
+
+        />
         <security:intercept-url pattern="/" access="permitAll()"/>
-        <!--<security:intercept-url pattern="/admin/**" access="hasRole('ROLE_ADMIN')"/>-->
+        <security:intercept-url pattern="/admin/**" access="hasRole('ROLE_ADMIN')"/>
+        <security:intercept-url pattern="/profile" access="hasRole('ROLE_USER')"/>
         <security:logout logout-url="/logout" logout-success-url="/"/>
+        <security:access-denied-handler error-page="/login-page?no-access"/>
 
     </security:http>
     <bean id="encoder" class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder"/>
@@ -27,9 +32,4 @@
         </security:authentication-provider>
 
     </security:authentication-manager>
-
-
-
-
-
 </beans>

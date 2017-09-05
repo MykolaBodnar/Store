@@ -8,9 +8,7 @@ import ua.entity.Producer;
 
 import java.util.List;
 
-public interface ProducerDao extends JpaRepository<Producer,Integer>, JpaSpecificationExecutor<Producer> {
-    @Query("select p from Producer p left join fetch p.items where p.id =:id")
-    Producer findOneWithItems(@Param("id") int id);
+public interface ProducerDao extends JpaRepository<Producer, Integer>, JpaSpecificationExecutor<Producer> {
 
     @Query("select distinct p from Category c join c.items i join i.producer p where c.id =:categoryId")
     List<Producer> findAllByCategoryId(@Param("categoryId") int categoryId);

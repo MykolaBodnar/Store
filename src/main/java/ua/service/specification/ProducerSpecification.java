@@ -20,7 +20,7 @@ public class ProducerSpecification implements Specification<Producer> {
 
     @Override
     public Predicate toPredicate(Root<Producer> root, CriteriaQuery<?> criteriaQuery, CriteriaBuilder criteriaBuilder) {
-        if(filter.getName().isEmpty()) return null;
-        return criteriaBuilder.like(root.get("name"), filter.getName()+"%");
+        if (filter.getName().isEmpty()) return null;
+        return criteriaBuilder.like(root.get("name"), filter.getName() + "%");
     }
 }

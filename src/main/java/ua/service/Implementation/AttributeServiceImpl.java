@@ -21,10 +21,7 @@ import java.util.List;
 public class AttributeServiceImpl implements AttributeService {
 
     @Autowired
-    AttributeDao attributeDao;
-
-    @Autowired
-    AttributeValueDao attributeValueDao;
+    private AttributeDao attributeDao;
 
     @Override
     public void save(Attribute attribute) {
@@ -60,12 +57,12 @@ public class AttributeServiceImpl implements AttributeService {
 
     @Override
     public Page<Attribute> findAll(NameFilter filter, Pageable pageable) {
-        return attributeDao.findAll(new AttributeSpecification(filter),pageable);
+        return attributeDao.findAll(new AttributeSpecification(filter), pageable);
     }
 
     @Override
     public Page<Attribute> findAllWithOutLoaded(Category category, NameFilter filter, Pageable pageable) {
-        return attributeDao.findAll(new AttributeExcludeCategorySpecification(filter,category),pageable);
+        return attributeDao.findAll(new AttributeExcludeCategorySpecification(filter, category), pageable);
     }
 
     @Override

@@ -10,8 +10,7 @@ import ua.entity.AttributeValue;
 import java.util.List;
 
 @Repository
-public interface AttributeValueDao extends JpaRepository<AttributeValue,Integer>, JpaSpecificationExecutor<AttributeValue> {
-    List<AttributeValue> findAllByAttributeId(@Param("id") int id);
+public interface AttributeValueDao extends JpaRepository<AttributeValue, Integer>, JpaSpecificationExecutor<AttributeValue> {
 
     @Query("select  av from AttributeValue av left join fetch av.attribute where av.id =:id")
     AttributeValue findOneWithAttribute(@Param("id") int id);
@@ -20,8 +19,8 @@ public interface AttributeValueDao extends JpaRepository<AttributeValue,Integer>
             "where av.value =:attributeValue and a.id =:attributeId")
     boolean valueExist(@Param("attributeValue") String value, @Param("attributeId") int id);
 
-    /*
-    boolean valueExist(String value);
+    @Query("select distinct av from Item i join i.attributeValues av left join fetch av.attribute a where i.id =:itemId")
+    List<AttributeValue> findAllByItem(@Param("itemId") int itemId);
 
-    boolean attributeByNameExistsInCategory(@Param("name") String name, @Param("categoryId") int categoryId);*/
+
 }

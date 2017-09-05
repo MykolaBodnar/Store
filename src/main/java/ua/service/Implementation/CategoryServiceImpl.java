@@ -8,6 +8,8 @@ import org.springframework.transaction.annotation.Transactional;
 import ua.dao.CategoryDao;
 import ua.dao.ItemDao;
 import ua.dao.AttributeDao;
+import ua.dto.CategoryDto;
+import ua.dto.DtoMapper;
 import ua.dto.filter.NameFilter;
 import ua.entity.Category;
 import ua.entity.Item;
@@ -25,10 +27,6 @@ public class CategoryServiceImpl implements CategoryService {
     private CategoryDao categoryDao;
 
     @Autowired
-    private ItemDao itemDao;
-
-
-    @Autowired
     private AttributeDao attributeDao;
 
     @Autowired
@@ -41,7 +39,7 @@ public class CategoryServiceImpl implements CategoryService {
 
     @Override
     public void delete(int id) {
-        for(Item item:categoryDao.findOneWithItems(id).getItems()){
+        for (Item item : categoryDao.findOneWithItems(id).getItems()) {
             fileUtils.delete(String.valueOf(item.getId()));
         }
         categoryDao.delete(id);
@@ -53,8 +51,8 @@ public class CategoryServiceImpl implements CategoryService {
     }
 
     @Override
-    public List<Category> findAll() {
-        return categoryDao.findAll();
+    public List<CategoryDto> findAll() {
+        return DtoMapper.categoryListToDto(categoryDao.findAll());
     }
 
     @Override
@@ -67,7 +65,7 @@ public class CategoryServiceImpl implements CategoryService {
     @Override
     public void deleteAttribute(int id, int attributeId) {
         Category category = categoryDao.findOneWithAttribute(id);
-        category.getAttributes().removeIf(da-> da.getId()== attributeId);
+        category.getAttributes().removeIf(da -> da.getId() == attributeId);
         categoryDao.save(category);
     }
 
@@ -83,7 +81,7 @@ public class CategoryServiceImpl implements CategoryService {
 
     @Override
     public Page<Category> findAll(NameFilter filter, Pageable pageable) {
-        return categoryDao.findAll(new CategorySpecification(filter),pageable);
+        return categoryDao.findAll(new CategorySpecification(filter), pageable);
     }
 
     @Override

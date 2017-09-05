@@ -26,6 +26,9 @@ public class User implements UserDetails{
     private boolean enabled;
     private String UUID;
 
+    @OneToMany(mappedBy = "user")
+    private List<Order> orders;
+
     public User() {
     }
 
@@ -35,6 +38,14 @@ public class User implements UserDetails{
 
     public void setId(int id) {
         this.id = id;
+    }
+
+    public List<Order> getOrders() {
+        return orders;
+    }
+
+    public void setOrders(List<Order> orders) {
+        this.orders = orders;
     }
 
     public String getName() {

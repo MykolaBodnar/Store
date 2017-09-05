@@ -19,9 +19,7 @@ import java.util.List;
 public class AttributeValueServiceImpl implements AttributeValueService {
 
     @Autowired
-    AttributeValueDao attributeValueDao;
-    @Autowired
-    AttributeDao attributeDao;
+    private AttributeValueDao attributeValueDao;
 
     @Override
     public void save(AttributeValue attributeValue) {
@@ -45,7 +43,7 @@ public class AttributeValueServiceImpl implements AttributeValueService {
 
     @Override
     public Page<AttributeValue> findAll(int stringAttributeId, AttributeValueFilter filter, Pageable pageable) {
-        return attributeValueDao.findAll(new AttributeValueSpecification(stringAttributeId,filter),pageable);
+        return attributeValueDao.findAll(new AttributeValueSpecification(stringAttributeId, filter), pageable);
     }
 
     @Override
@@ -55,6 +53,11 @@ public class AttributeValueServiceImpl implements AttributeValueService {
 
     @Override
     public boolean valueExist(AttributeValue attributeValue) {
-        return attributeValueDao.valueExist(attributeValue.getValue(),attributeValue.getAttribute().getId());
+        return attributeValueDao.valueExist(attributeValue.getValue(), attributeValue.getAttribute().getId());
+    }
+
+    @Override
+    public List<AttributeValue> findAllByItem(int itemId) {
+        return attributeValueDao.findAllByItem(itemId);
     }
 }

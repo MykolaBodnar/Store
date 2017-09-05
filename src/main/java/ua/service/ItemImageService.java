@@ -7,8 +7,11 @@ import java.util.List;
 
 public interface ItemImageService {
     void save(MultipartFile[] multipartFile, int itemId);
+
     void delete(int id);
+
     ItemImage findOne(int id);
+
     List<ItemImage> findAllByItemId(int itemId);
 
 }

@@ -9,12 +9,13 @@ import ua.service.UserService;
 @Controller("adminUserController")
 @RequestMapping("/admin/user")
 public class UserController {
+
     @Autowired
-    UserService userService;
+    private UserService userService;
 
     @RequestMapping
-    public String list(Model model){
-        model.addAttribute("users",userService.findAll());
+    public String list(Model model) {
+        model.addAttribute("users", userService.findAll());
         return "admin-userList";
     }
 }

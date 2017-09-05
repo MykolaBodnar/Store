@@ -27,6 +27,9 @@ public class Item {
     @OneToMany(mappedBy = "item", orphanRemoval = true)
     private List<ItemImage> itemImages = new ArrayList<>();
 
+    @OneToMany(mappedBy = "item")
+    private List<OrderItem> orderItems;
+
     @ManyToMany
     @JoinTable(
             name = "item_attribute_value",
@@ -76,6 +79,14 @@ public class Item {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public List<OrderItem> getOrderItems() {
+        return orderItems;
+    }
+
+    public void setOrderItems(List<OrderItem> orderItems) {
+        this.orderItems = orderItems;
     }
 
     public BigDecimal getPrice() {

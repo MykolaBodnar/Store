@@ -26,7 +26,7 @@ public class AttributeExcludeCategorySpecification implements Specification<Attr
         this.filter = filter;
     }
 
-    private void addExcludeFilter(Root<Attribute> root, CriteriaQuery<?> criteriaQuery, CriteriaBuilder criteriaBuilder) {
+    private void addExcludeFilter(Root<Attribute> root, CriteriaBuilder criteriaBuilder) {
         if (category.getAttributes() != null && !category.getAttributes().isEmpty()) {
             List<Integer> ids = category.getAttributes().stream()
                     .map(Attribute::getId).collect(Collectors.toList());
@@ -34,7 +34,7 @@ public class AttributeExcludeCategorySpecification implements Specification<Attr
         }
     }
 
-    private void addFilterByName(Root<Attribute> root, CriteriaQuery<?> criteriaQuery, CriteriaBuilder criteriaBuilder) {
+    private void addFilterByName(Root<Attribute> root, CriteriaBuilder criteriaBuilder) {
         if (!filter.getName().isEmpty()) {
             predicates.add(criteriaBuilder.like(root.get("name"), filter.getName() + "%"));
         }
@@ -42,8 +42,8 @@ public class AttributeExcludeCategorySpecification implements Specification<Attr
 
     @Override
     public Predicate toPredicate(Root<Attribute> root, CriteriaQuery<?> criteriaQuery, CriteriaBuilder criteriaBuilder) {
-        addExcludeFilter(root, criteriaQuery, criteriaBuilder);
-        addFilterByName(root, criteriaQuery, criteriaBuilder);
+        addExcludeFilter(root, criteriaBuilder);
+        addFilterByName(root, criteriaBuilder);
         if (predicates.isEmpty()) return null;
         Predicate[] result = new Predicate[predicates.size()];
         return criteriaBuilder.and(predicates.toArray(result));

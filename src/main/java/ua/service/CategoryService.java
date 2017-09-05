@@ -2,6 +2,7 @@ package ua.service;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import ua.dto.CategoryDto;
 import ua.dto.filter.NameFilter;
 import ua.entity.Category;
 
@@ -9,9 +10,12 @@ import java.util.List;
 
 public interface CategoryService {
     void save(Category category);
+
     void delete(int id);
+
     Category findOne(int id);
-    List<Category> findAll();
+
+    List<CategoryDto> findAll();
 
     void addAttribute(int id, int attributeId);
 

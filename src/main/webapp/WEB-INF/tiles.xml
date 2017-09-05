@@ -6,16 +6,14 @@
 <tiles-definitions>
     <definition name="user" template="/WEB-INF/layout/user/template.jsp">
         <put-attribute name="title" value="library"/>
-        <put-attribute name="header" value="/WEB-INF/layout/user/header.jsp"/>
         <put-attribute name="footer" value="/WEB-INF/layout/user/footer.jsp"/>
         <put-attribute name="menu" value="/WEB-INF/layout/user/menu.jsp"/>
     </definition>
 
     <definition name="admin" template="/WEB-INF/layout/admin/template.jsp">
         <put-attribute name="title" value="library"/>
-        <put-attribute name="header" value="/WEB-INF/layout/user/header.jsp"/>
         <put-attribute name="footer" value="/WEB-INF/layout/user/footer.jsp"/>
-        <put-attribute name="menu" value="/WEB-INF/layout/user/menu.jsp"/>
+        <put-attribute name="menu" value="/WEB-INF/layout/admin/menu.jsp"/>
     </definition>
 
     <definition name="*-*" extends="{1}">

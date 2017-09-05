@@ -23,7 +23,7 @@ $(document).ready(
                 var attributeId = $(this).data("attributeId");
                 var attributeName = $(this).data("attributeName");
                 var attributeValue = {
-                    attribute:{
+                    attribute: {
                         id: attributeId
                     },
                     value: $("#new-attribute-value").val()
@@ -37,7 +37,7 @@ $(document).ready(
                     dataType: 'json',
                     data: JSON.stringify(attributeValue),
                     beforeSend: function (xhr) {
-                        xhr.setRequestHeader (header, token);
+                        xhr.setRequestHeader(header, token);
                     },
                     success: function (data) {
                         var option = $("<option></option>").text(data.value).attr("value", data.id).attr("selected", true);

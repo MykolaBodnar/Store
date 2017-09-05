@@ -7,7 +7,8 @@ import ua.entity.ItemImage;
 
 import java.util.List;
 
-public interface ItemImageDao  extends JpaRepository<ItemImage,Integer>{
+public interface ItemImageDao extends JpaRepository<ItemImage, Integer> {
+
     @Query("select ii from ItemImage ii where ii.item.id =:itemId")
-    List<ItemImage> findAllByItemId(@Param("itemId") int itemId);
+    List<ItemImage> findAllByItem(@Param("itemId") int itemId);
 }

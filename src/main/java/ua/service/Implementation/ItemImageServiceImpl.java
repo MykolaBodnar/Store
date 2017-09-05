@@ -18,13 +18,13 @@ import java.util.List;
 public class ItemImageServiceImpl implements ItemImageService {
 
     @Autowired
-    ItemImageDao itemImageDao;
+    private ItemImageDao itemImageDao;
 
     @Autowired
-    ItemDao itemDao;
+    private ItemDao itemDao;
 
     @Autowired
-    FileUtils fileUtils;
+    private FileUtils fileUtils;
 
     @Override
     public void save(MultipartFile[] multipartFiles, int itemId) {
@@ -57,7 +57,7 @@ public class ItemImageServiceImpl implements ItemImageService {
 
     @Override
     public List<ItemImage> findAllByItemId(int itemId) {
-        return itemImageDao.findAllByItemId(itemId);
+        return itemImageDao.findAllByItem(itemId);
     }
 
 }

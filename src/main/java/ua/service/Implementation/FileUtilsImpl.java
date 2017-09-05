@@ -1,5 +1,6 @@
 package ua.service.Implementation;
 
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 import ua.service.FileUtils;
@@ -10,6 +11,7 @@ import java.io.IOException;
 @Service
 public class FileUtilsImpl implements FileUtils {
     @Override
+    @Async
     public boolean write(MultipartFile multipartFile, String folderName, String fileName) {
         if (multipartFile != null && !multipartFile.isEmpty()) {
             String path = System.getProperty("catalina.home") + "/resources/" + folderName;
@@ -29,6 +31,7 @@ public class FileUtilsImpl implements FileUtils {
     }
 
     @Override
+    @Async
     public boolean delete(String path) {
         File file = new File(System.getProperty("catalina.home") + "/resources/" + path);
         if (file.isDirectory()) {

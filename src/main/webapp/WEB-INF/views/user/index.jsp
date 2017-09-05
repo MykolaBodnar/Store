@@ -1,6 +1,6 @@
-<%@ page contentType="text/html;charset=UTF-8"%>
+<%@ page contentType="text/html;charset=UTF-8" %>
 <%@ taglib uri="http://www.springframework.org/security/tags"
-           prefix="security"%>
+           prefix="security" %>
 <div>
     <a href="/admin/producer">producer</a>
 </div>
@@ -12,6 +12,7 @@
 </div>
 <div>
     <a href="/registration">registration</a>
-</div><div>
+</div>
+<div>
     <a href="/login-page">login-page</a>
 </div>

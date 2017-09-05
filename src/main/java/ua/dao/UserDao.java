@@ -8,6 +8,7 @@ import ua.entity.User;
 
 @Repository
 public interface UserDao extends JpaRepository<User, Integer> {
+
     User findByEmail(String email);
 
     @Query("select u from User u where u.UUID =:uuid")

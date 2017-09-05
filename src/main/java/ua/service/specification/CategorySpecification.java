@@ -19,7 +19,7 @@ public class CategorySpecification implements Specification<Category> {
 
     @Override
     public Predicate toPredicate(Root<Category> root, CriteriaQuery<?> criteriaQuery, CriteriaBuilder criteriaBuilder) {
-        if(filter.getName().isEmpty()) return null;
-        return criteriaBuilder.like(root.get("name"), filter.getName()+"%");
+        if (filter.getName().isEmpty()) return null;
+        return criteriaBuilder.like(root.get("name"), filter.getName() + "%");
     }
 }

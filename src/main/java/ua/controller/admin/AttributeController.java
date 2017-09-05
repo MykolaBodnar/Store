@@ -21,7 +21,7 @@ import javax.validation.Valid;
 @RequestMapping("/admin/attribute")
 public class AttributeController {
     @Autowired
-    AttributeService attributeService;
+    private AttributeService attributeService;
 
     @Autowired
     private AttributeValueService attributeValueService;
@@ -37,7 +37,7 @@ public class AttributeController {
     }
 
     @ModelAttribute("valueFilter")
-    AttributeValueFilter getAttributeValueFilter() {
+    public AttributeValueFilter getAttributeValueFilter() {
         return new AttributeValueFilter();
     }
 

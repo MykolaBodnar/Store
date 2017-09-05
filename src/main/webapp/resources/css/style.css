@@ -1,0 +1,95 @@
+.right-btn {
+    float: right;
+    margin-right: 20px;
+}
+
+.line-name {
+    margin-left: 20px;
+    float: left;
+    line-height: 30px;
+}
+
+.list-group-item {
+    padding-top: 7px;
+    padding-bottom: 7px;
+}
+
+.search-form {
+    margin: 0 0 20px 0;
+}
+
+.search-form input {
+    width: 100%;
+}
+
+.item-filter {
+    width: 200px;
+    height: 400px;
+    border: solid grey 1px;
+    border-radius: 20px;
+}
+
+.create-btn {
+    margin: 0 0 20px 0;
+}
+
+.item-image {
+    width: 100%;
+}
+
+.main-image {
+    width: 100%;
+}
+
+.item-list-image {
+    text-align: center;
+    height: 150px;
+    background: url("/resources/images/noImage.png") center no-repeat;
+}
+
+.item-list-image img {
+    max-height: 100%;
+    max-width: 100%;
+}
+
+#left {
+    border-right: 1px solid rgba(188, 189, 182, 0.71);
+}
+
+.category-btn {
+    margin: 0 auto;
+    min-width: 100px;
+}
+
+.item-search {
+    width: 217px;
+}
+
+.remove-item {
+    color: red;
+}
+
+#basketBody img, .orders img {
+    max-height: 100px;
+    max-width: 100%;
+}
+
+#basketBody .row, .orders .row {
+    padding: 10px 0;
+    border-bottom: 1px solid gainsboro;
+}
+
+.basket-price, .basket-name {
+    padding-top: 5px;
+}
+
+.basket-total {
+    padding: 20px;
+}
+
+.error {
+    color: #ff0000;
+    font-style: italic;
+    font-weight: bold;
+}
+

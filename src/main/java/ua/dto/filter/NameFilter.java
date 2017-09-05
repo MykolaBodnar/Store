@@ -6,6 +6,10 @@ public class NameFilter {
     public NameFilter() {
     }
 
+    public NameFilter(String name) {
+        this.name = name;
+    }
+
     public String getName() {
         return name;
     }

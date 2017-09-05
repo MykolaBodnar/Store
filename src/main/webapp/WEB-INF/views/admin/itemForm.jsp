@@ -1,7 +1,7 @@
-<%@ page contentType="text/html;charset=UTF-8"%>
+<%@ page contentType="text/html;charset=UTF-8" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form" %>
-<%@ taglib uri="http://www.springframework.org/security/tags" prefix="security"%>
+<%@ taglib uri="http://www.springframework.org/security/tags" prefix="security" %>
 
 <h3>${category.name}</h3>
 <form:form action="/admin/item" method="post" modelAttribute="form" class="form-horizontal"
@@ -52,12 +52,12 @@
             <label class="btn btn-primary">
                 Browse <form:input name="image" path="file" type="file" id="file" style="display: none;"/>
             </label>
-            <img id = "image" width="300px" src="/images/${form.imageUrl}">
+            <img id="image" width="300px" src="/images/${form.imageUrl}">
         </div>
     </div>
-        <div class="col-sm-offset-2 col-sm-10">
-            <form:button class="btn btn-default">Submit</form:button>
-        </div>
+    <div class="col-sm-offset-2 col-sm-10">
+        <form:button class="btn btn-default">Submit</form:button>
+    </div>
     </div>
 </form:form>
 <div id="myModal" class="modal fade" role="dialog">
@@ -79,5 +79,5 @@
 
     </div>
 </div>
-<security:csrfMetaTags />
+<security:csrfMetaTags/>
 <script src="/resources/js/itemForm.js"></script>

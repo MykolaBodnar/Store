@@ -14,6 +14,7 @@ public class MailSender {
     private final static String USERNAME = "bodnar.mykola1997@gmail.com";
     private final static String PASSWORD = "mbo999tmnt";
     private final static String EMAILFROM = "bodnar.mykola1997@gmail.com";
+
     @Async
     public void sendMail(String content, String email, String path) {
         Properties properties = System.getProperties();

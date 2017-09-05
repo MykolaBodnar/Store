@@ -49,7 +49,7 @@ public class AttributeValueController {
     public String save(@Valid @ModelAttribute("form") AttributeValue attributeValue, BindingResult bindingResult,
                        Model model) {
         if (bindingResult.hasErrors()) {
-            return form(model,attributeValue.getAttribute().getId());
+            return form(model, attributeValue.getAttribute().getId());
         }
         attributeValueService.save(attributeValue);
         return "redirect:/admin/attribute/" + attributeValue.getAttribute().getId() + "/values";
