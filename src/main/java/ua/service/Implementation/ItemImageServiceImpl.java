@@ -35,12 +35,10 @@ public class ItemImageServiceImpl implements ItemImageService {
             String folderName = String.valueOf(itemId);
             String fileName = itemImage.getId() + ".jpg";
             String imagePath = folderName + "/" + fileName;
-            if (fileUtils.write(multipartFiles[i], folderName, fileName)) {
-                itemImage.setPath(imagePath);
-                itemImageDao.save(itemImage);
-            } else {
-                itemImageDao.delete(itemImage);
-            }
+            fileUtils.write(multipartFiles[i], folderName, fileName);
+            itemImage.setPath(imagePath);
+            itemImageDao.save(itemImage);
+
         }
     }
 
