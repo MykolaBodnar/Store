@@ -3,7 +3,6 @@ $(document).ready(
         $('[data-toggle="popover"]').popover();
         $.cookie.json = true;
         if ($.cookie("items") === undefined) {
-            alert("");
             $.cookie("items", {}, {path: '/'});
         }
         $.removeCookie("items", {path: '/item'});
